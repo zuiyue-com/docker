@@ -1,0 +1,10 @@
+#! /bin/bash
+sudo cp /home/core/.bashrc /home/core/.bashrc.bak
+sudo rm -rf /home/core/.bashrc
+sudo mv /home/core/.bashrc.bak /home/core/.bashrc
+
+sudo echo "export PATH=\"/home/core/docker/shell:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin:\$PATH\"" >> /home/core/.bashrc
+sudo echo "export PATH=\"/home/core/docker/shell:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin:\$PATH\"" >> /root/.bashrc
+
+export PATH="/home/core/docker/shell:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin:$PATH"
+

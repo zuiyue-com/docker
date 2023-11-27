@@ -1,0 +1,31 @@
+#!/bin/bash
+REPO_NAME=$(basename $(pwd))
+ACCESS="--name $REPO_NAME --privileged --net=host --shm-size 256g"
+GPU_BOOL=`lspci | grep -i nvidia | wc -l`
+GPU="--gpus all"
+if [ $GPU_BOOL == "0" ] 
+then
+    GPU=""
+fi
+
+X11="$GPU -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix"
+#VIDEO="--device=/dev/video0:/dev/video0" # -v /dev/video0:/dev/video0"
+PROXY="-e HTTP_PROXY=http://127.0.0.1:7890 -e HTTPS_PROXY=http://127.0.0.1:7890"
+ENTRYPOINT="--entrypoint="
+VOLUME="-v $(pwd):$(pwd) -v /home/core:/home/core"
+# -w $(pwd)"
+PARAM="$ACCESS $VOLUME $X11 $VIDEO $PROXY $ENTRYPOINT"
+COMMAND="bash"
+
+REPO="zuiyuecom/$REPO_NAME"
+
+if [ $1 ]
+then
+    REPO=$*
+    COMMAND=""
+fi
+
+
+xhost +
+echo "sudo docker run -it --rm $PARAM $REPO $COMMAND"
+sudo docker run -it --rm $PARAM $REPO $COMMAND

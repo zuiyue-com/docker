@@ -1,0 +1,13 @@
+#! /bin/bash
+
+REPO_NAME=$(basename $(pwd))
+#REPO=weiforce/$REPO_NAME
+REPO=$REPO_NAME
+
+if [ $1 ]
+then
+    REPO=$1
+fi
+
+
+sudo docker exec -it $REPO bash

@@ -1,0 +1,21 @@
+[Unit]
+Description=%p
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop %p
+ExecStartPre=-/usr/bin/docker kill %p
+ExecStartPre=-/usr/bin/docker rm %p
+
+ExecStart=/usr/bin/docker run --name ofelia -v /root:/root -v /home/core/.ssh:/root/.ssh -v /etc/hosts:/etc/hosts -v /home/core/data/ofelia:/etc/ofelia -v /var/run/docker.sock:/var/run/docker.sock -v /home/core/data:/home/core/data ivories/ofelia
+
+ExecStop=/usr/bin/docker stop %p
+ExecStop=/usr/bin/docker kill %p
+
+[Install]
+WantedBy=multi-user.target
+

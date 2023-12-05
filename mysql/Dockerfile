@@ -1,3 +1,6 @@
 FROM mysql
 
 RUN ls
+
+
+EXPOSE 8088

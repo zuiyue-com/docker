@@ -14,3 +14,7 @@ RUN apt-get install -y libssh2-1-dev libssh2-1 \
 RUN apt-get install -y \
     libpng-dev \
     && docker-php-ext-install -j$(nproc) gd
+
+RUN apt-get install -y libmagickwand-dev; \
+    pecl install imagick; \
+    docker-php-ext-enable imagick;
